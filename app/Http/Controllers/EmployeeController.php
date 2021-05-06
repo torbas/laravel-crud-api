@@ -17,6 +17,8 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = $this->empRepository->listAll();
-        return view('employees.list',['employees'=>$employees]);
+        echo "hello";
+        //return view('welcome');
+        //return view('employees.list',['employees'=>$employees]);
     }
 }
