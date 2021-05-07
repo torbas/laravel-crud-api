@@ -40,9 +40,6 @@ class EmployeeClass implements EmployeeRepository
     	$database = $this->database;
     	//$this->createEmployee("jack", "jack", "jackjack@email.com", "developer");
      	$employees = $database->getReference('employees')->getValue();
-     	echo "world";
-     	print_r($employees);
-  		
-        //return Employee::all();
+     	return $employees;
     }
 }

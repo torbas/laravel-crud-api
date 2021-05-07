@@ -17,8 +17,13 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = $this->empRepository->listAll();
-        echo "hello";
+        return json_encode($employees);
         //return view('welcome');
         //return view('employees.list',['employees'=>$employees]);
+    }
+
+    public function store(Request $request)
+    {
+    	echo "hello";
     }
 }
