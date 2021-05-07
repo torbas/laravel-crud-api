@@ -33,6 +33,8 @@ class EmployeeClass implements EmployeeRepository
 		];
 
 		$database->getReference()->update($updates);
+
+		return $emp_key;
     }
 
     public function listAll()
