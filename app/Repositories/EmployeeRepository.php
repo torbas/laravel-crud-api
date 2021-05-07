@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+//use interface to make it easy to swap out logic if storage method changes
 Interface EmployeeRepository
 {
     public function listAll();

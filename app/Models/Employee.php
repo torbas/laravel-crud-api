@@ -7,6 +7,8 @@ namespace App\Models;
 
 class Employee 
 {
+	//just a normal object class and not using eloquent since not using mysql local
+
     //use HasFactory;
     public $id;
     public $first_name;

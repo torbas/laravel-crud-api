@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //for a more complicated application, would separate this to another provider
+        //can swap out employee class for another class with different methods for a different storage solution
         $this->app->bind(EmployeeRepository::class, EmployeeClass::class);
 
     }
