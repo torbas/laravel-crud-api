@@ -28,13 +28,16 @@ class EmployeeClass implements EmployeeRepository
      	$emp_id = $first_name[0].$last_name.$random;
   		$emp = new Employee($emp_id, $first_name, $last_name, $email, $role);
 
+  		$ref = 'employees/'.$emp_key;
 		$updates = [
-		    'employees/'.$emp_key => $emp,
+		    $ref => $emp,
 		];
 
 		$database->getReference()->update($updates);
+		//check it exists after created
+		$exists = $database->getReference($ref)->getSnapshot()->exists();
 
-		return $emp_key;
+		return $exists;
     }
 
     public function listAll()
@@ -85,6 +88,8 @@ class EmployeeClass implements EmployeeRepository
 
 		$database->getReference()->update($updates);
 
+		//needs better check to see if update is done
+
 		return $emp_key;
     }
 
@@ -106,6 +111,13 @@ class EmployeeClass implements EmployeeRepository
 
   		$database->getReference($ref)->remove();
 
-		return $emp_key;
+  		$exists = $database->getReference($ref)->getSnapshot()->exists();
+
+  		//if doesn't exist then true
+  		if(!$exists){
+  			return 1;
+  		}
+
+		return 0;
     }
 }

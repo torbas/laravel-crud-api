@@ -17,7 +17,9 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = $this->empRepository->listAll();
-        return json_encode($employees);
+        $result_data = array('data' => $employees);
+
+        return response()->json(['data' => $employees], 200);
         //return view('welcome');
         //return view('employees.list',['employees'=>$employees]);
     }
@@ -25,7 +27,13 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
     	$created = $this->empRepository->createEmployee($request->first_name, $request->last_name, $request->email, $request->role);
-    	return json_encode($created);
+
+    	if($created){
+    		return response()->json(['data' => $created], 200);
+    	}
+
+    	return response()->json(['error' => 'Employee not created'], 500);
+    	
     }
 
     public function show($id)
@@ -34,7 +42,7 @@ class EmployeeController extends Controller
     	if(!$employee){
     		return response()->json(['error' => 'Employee not found'], 404);
     	}
-    	return json_encode($employee);
+    	return response()->json(['data' => $employee], 200);
     }
 
     public function update($id, Request $request)
@@ -43,16 +51,19 @@ class EmployeeController extends Controller
     	if(!$updated){
     		return response()->json(['error' => 'Employee not found'], 404);
     	}
-    	return json_encode($updated);
+    	//for now returns emp id
+    	return response()->json(['data' => $updated], 204);
     }
 
     public function destroy($id)
     {
     	$deleted = $this->empRepository->deleteEmployee($id);
+
     	if(!$deleted){
-    		return response()->json(['error' => 'Employee not found'], 404);
+    		return response()->json(['error' => 'Employee not found or deleted'], 500);
     	}
-    	return json_encode($deleted);
+    	
+    	return response()->json(['data' => $deleted], 204);
     }
 
 }
