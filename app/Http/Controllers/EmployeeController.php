@@ -30,6 +30,7 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-    	//echo $id;
+    	$employee = $this->empRepository->showEmployee($id);
+    	return json_encode($employee);
     }
 }

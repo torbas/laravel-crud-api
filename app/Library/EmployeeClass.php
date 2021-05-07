@@ -40,8 +40,20 @@ class EmployeeClass implements EmployeeRepository
     public function listAll()
     {
     	$database = $this->database;
-    	//$this->createEmployee("jack", "jack", "jackjack@email.com", "developer");
+
      	$employees = $database->getReference('employees')->getValue();
      	return $employees;
+    }
+
+    public function showEmployee($id){
+    	$database = $this->database;
+
+     	$employee = $database->getReference('employees')
+     				 ->orderByChild('id')
+     				 ->equalTo($id)
+     				 ->getSnapshot()
+     				 ->getValue();
+
+     	return $employee;
     }
 }
