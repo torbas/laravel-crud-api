@@ -1,6 +1,7 @@
 ## Simple CRUD API using Laravel
 
 - Currently uses firebase to store date using <a href="https://github.com/kreait/laravel-firebase">https://github.com/kreait/laravel-firebase</a>.
+- Will need a firebase config file and database uri
 - Mock employee data storing service
 
 <p> Tested CRUD methods by using the desktop Postman application pointing to localhost </p>
