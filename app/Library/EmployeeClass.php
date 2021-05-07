@@ -88,7 +88,33 @@ class EmployeeClass implements EmployeeRepository
 
 		$database->getReference()->update($updates);
 
-		//needs better check to see if update is done
+		//not the most efficient check but its a check
+
+		//get the same record again
+		$emp_updated = $database->getReference('employees')
+     				 ->orderByChild('id')
+     				 ->equalTo($id)
+     				 ->getSnapshot()
+     				 ->getValue();
+
+        //checks will count update success if it matches passed parameters
+     	//checking passed parameters rather than $emp since record could still be "updated" with previous values 
+     	//return 0 (false)
+     	if($emp_updated[$emp_key]['first_name'] != $first_name){
+     		return 0;
+     	}
+     	if($emp_updated[$emp_key]['last_name'] != $last_name){
+     		return 0;
+     	}
+     	if($emp_updated[$emp_key]['email'] != $email){
+     		return 0;
+     	}
+     	if($emp_updated[$emp_key]['role'] != $role){
+     		return 0;
+     	}
+     	if($emp_updated[$emp_key]['id'] != $id){
+     		return 0;
+     	}
 
 		return $emp_key;
     }
