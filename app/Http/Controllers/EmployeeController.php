@@ -31,13 +31,28 @@ class EmployeeController extends Controller
     public function show($id)
     {
     	$employee = $this->empRepository->showEmployee($id);
+    	if(!$employee){
+    		return response()->json(['error' => 'Employee not found'], 404);
+    	}
     	return json_encode($employee);
     }
 
     public function update($id, Request $request)
     {
     	$updated = $this->empRepository->updateEmployee($id, $request->first_name, $request->last_name, $request->email, $request->role);
+    	if(!$updated){
+    		return response()->json(['error' => 'Employee not found'], 404);
+    	}
     	return json_encode($updated);
+    }
+
+    public function destroy($id)
+    {
+    	$deleted = $this->empRepository->deleteEmployee($id);
+    	if(!$deleted){
+    		return response()->json(['error' => 'Employee not found'], 404);
+    	}
+    	return json_encode($deleted);
     }
 
 }

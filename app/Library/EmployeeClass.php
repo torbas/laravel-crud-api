@@ -23,7 +23,7 @@ class EmployeeClass implements EmployeeRepository
 
     public function createEmployee($first_name, $last_name, $email, $role){
     	$database = $this->database;
-     	$emp_key = $database->getReference('users')->push()->getKey();
+     	$emp_key = $database->getReference('employees')->push()->getKey();
      	$random = mt_rand(100, 999);
      	$emp_id = $first_name[0].$last_name.$random;
   		$emp = new Employee($emp_id, $first_name, $last_name, $email, $role);
@@ -54,6 +54,11 @@ class EmployeeClass implements EmployeeRepository
      				 ->getSnapshot()
      				 ->getValue();
 
+     	//if not found send false		 
+     	if(empty($emp)){
+     		return false;
+     	}
+
      	return $employee;
     }
 
@@ -66,6 +71,11 @@ class EmployeeClass implements EmployeeRepository
      				 ->getSnapshot()
      				 ->getValue();
 
+        //if not found send false		 
+     	if(empty($emp)){
+     		return false;
+     	}
+
      	$emp_key = key($emp);
 
   		$emp = new Employee($id, $first_name, $last_name, $email, $role);
@@ -74,6 +84,27 @@ class EmployeeClass implements EmployeeRepository
 		];
 
 		$database->getReference()->update($updates);
+
+		return $emp_key;
+    }
+
+    public function deleteEmployee($id){
+    	$database = $this->database;
+     	$emp = $database->getReference('employees')
+     				 ->orderByChild('id')
+     				 ->equalTo($id)
+     				 ->getSnapshot()
+     				 ->getValue();
+
+     	//if not found send false		 
+     	if(empty($emp)){
+     		return false;
+     	}
+
+     	$emp_key = key($emp);
+     	$ref = 'employees/'.$emp_key;
+
+  		$database->getReference($ref)->remove();
 
 		return $emp_key;
     }

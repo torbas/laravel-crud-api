@@ -8,4 +8,5 @@ Interface EmployeeRepository
     public function createEmployee($first_name, $last_name, $email, $role);
     public function showEmployee($id);
     public function updateEmployee($id, $first_name, $last_name, $email, $role);
+    public function deleteEmployee($id);
 }
