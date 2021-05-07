@@ -56,4 +56,25 @@ class EmployeeClass implements EmployeeRepository
 
      	return $employee;
     }
+
+
+    public function updateEmployee($id, $first_name, $last_name, $email, $role){
+    	$database = $this->database;
+     	$emp = $database->getReference('employees')
+     				 ->orderByChild('id')
+     				 ->equalTo($id)
+     				 ->getSnapshot()
+     				 ->getValue();
+
+     	$emp_key = key($emp);
+
+  		$emp = new Employee($id, $first_name, $last_name, $email, $role);
+		$updates = [
+		    'employees/'.$emp_key => $emp,
+		];
+
+		$database->getReference()->update($updates);
+
+		return $emp_key;
+    }
 }

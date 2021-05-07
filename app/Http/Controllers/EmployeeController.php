@@ -24,7 +24,7 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
-    	$create = $this->empRepository->createEmployee($request->first_name, $request->last_name, $request->email, $request->role);
+    	$created = $this->empRepository->createEmployee($request->first_name, $request->last_name, $request->email, $request->role);
     	return json_encode($create);
     }
 
@@ -33,4 +33,11 @@ class EmployeeController extends Controller
     	$employee = $this->empRepository->showEmployee($id);
     	return json_encode($employee);
     }
+
+    public function update($id, Request $request)
+    {
+    	$updated = $this->empRepository->updateEmployee($id, $request->first_name, $request->last_name, $request->email, $request->role);
+    	return json_encode($updated);
+    }
+
 }
